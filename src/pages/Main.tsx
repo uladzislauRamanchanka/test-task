@@ -46,7 +46,7 @@ function Main() {
   useEffect(() => {
     dispatch(fetchPostsRequest({ userId }));
 
-    const url = userId.length > 0 ? `${getIds(userId)}` : "";
+    const url = userId.length > 0 ? `${getIds(userId, "&")}` : "";
 
     navigate(url);
   }, [dispatch, userId, navigate]);
@@ -59,7 +59,7 @@ function Main() {
       setUserId(
         typeof users === "string"
           ? users.split(",")
-          : users.map((_, index) => (index + 1).toString())
+          : users.map((value) => value)
       );
     },
     []

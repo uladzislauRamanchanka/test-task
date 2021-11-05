@@ -14,7 +14,7 @@ function* fetchPostsSaga(searchParams: FetchPostsRequest) {
   const {
     payload: { userId },
   } = searchParams;
-  const url = userId.length > 0 ? `posts?${getIds(userId)}` : "posts";
+  const url = userId.length > 0 ? `posts?${getIds(userId, "&")}` : "posts";
   try {
     const response: IPost[] = yield call(DATA.getPosts, url);
     yield put(
