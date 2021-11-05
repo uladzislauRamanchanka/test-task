@@ -50,14 +50,15 @@ const MultiSelect: React.FC<IProps> = ({ userId, options, handleChange }) => {
             value={userId}
             onChange={handleChange}
             input={<OutlinedInput label="User" />}
-            renderValue={(selected) => {
-              const names = selected.reduce<string[]>((total, value) => {
-                const match = options.find((option) => option.id === value);
-                if (match?.id) return total.concat(match.name);
-                else return total;
-              }, []);
-              return names.join(", ");
-            }}
+            renderValue={(selected) =>
+              selected
+                .reduce<string[]>((total, value) => {
+                  const match = options.find((option) => option.id === value);
+                  if (match?.id) return total.concat(match.name);
+                  else return total;
+                }, [])
+                ?.join(", ")
+            }
             MenuProps={MenuProps}
           >
             {options?.map(({ id, name }) => (
