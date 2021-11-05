@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components/macro";
 import { selectLoadingOptions } from "../../ducks/options/selectors";
+import { IOption } from "../../ducks/options/types";
 
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -31,7 +32,7 @@ const Wrapper = styled.div`
 
 interface IProps {
   userId: string[];
-  options: string[];
+  options: IOption[];
   handleChange: (event: SelectChangeEvent<string[]>) => void;
 }
 
@@ -48,14 +49,21 @@ const MultiSelect: React.FC<IProps> = ({ userId, options, handleChange }) => {
             multiple
             value={userId}
             onChange={handleChange}
-            input={<OutlinedInput label="Tag" />}
-            renderValue={(selected) => selected.join(", ")}
+            input={<OutlinedInput label="User" />}
+            renderValue={(selected) => {
+              const names = selected.reduce<string[]>((total, value) => {
+                const match = options.find((option) => option.id === value);
+                if (match?.id) return total.concat(match.name);
+                else return total;
+              }, []);
+              return names.join(", ");
+            }}
             MenuProps={MenuProps}
           >
-            {options?.map((id) => (
+            {options?.map(({ id, name }) => (
               <MenuItem key={id} value={id}>
                 <Checkbox checked={userId.indexOf(id) > -1} />
-                <ListItemText primary={id} />
+                <ListItemText primary={name} />
               </MenuItem>
             ))}
           </Select>

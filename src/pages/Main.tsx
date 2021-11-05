@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParsedUrl } from "../hooks";
+import { getIds } from "../utils/getIds";
 
 import styled from "styled-components/macro";
 
@@ -26,7 +27,6 @@ function Main() {
   const options = useSelector(selectOptions);
 
   const [userId, setUserId] = useState<string[]>([]);
-
   const parsedUrl = useParsedUrl();
   const navigate = useNavigate();
 
@@ -46,10 +46,7 @@ function Main() {
   useEffect(() => {
     dispatch(fetchPostsRequest({ userId }));
 
-    const url =
-      userId.length > 0
-        ? `${userId.map((id) => `userId=${id}`).join("&")}`
-        : "";
+    const url = userId.length > 0 ? `${getIds(userId)}` : "";
 
     navigate(url);
   }, [dispatch, userId, navigate]);
@@ -57,9 +54,13 @@ function Main() {
   const handleMultiSelectChange = useCallback(
     (event: SelectChangeEvent<typeof userId>) => {
       const {
-        target: { value },
+        target: { value: users },
       } = event;
-      setUserId(typeof value === "string" ? value.split(",") : value);
+      setUserId(
+        typeof users === "string"
+          ? users.split(",")
+          : users.map((_, index) => (index + 1).toString())
+      );
     },
     []
   );

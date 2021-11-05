@@ -12,10 +12,10 @@ import { OptionsActionTypes } from "./types";
 function* fetchOptionsSaga() {
   try {
     const response: IUser[] = yield call(DATA.getUsers);
-    const ids = response.map((user) => user.id.toString());
+    const options = response.map((user) => ({id: user.id.toString(), name: user.name}));
     yield put(
       fetchOptionsSuccess({
-        options: ids,
+        options: options,
       })
     );
   } catch (e) {

@@ -6,12 +6,17 @@ export enum OptionsActionTypes {
 
 export interface IOptionsState {
   isLoading: boolean;
-  options: string[];
+  options: IOption[];
   error: string;
 }
 
+export interface IOption {
+  id: string;
+  name: string;
+}
+
 export interface FetchOptionsSuccessPayload {
-  options: string[];
+  options: IOption[];
 }
 
 export interface FetchOptionsFailurePayload {
