@@ -26,10 +26,7 @@ const ButtonWrapper = styled.div`
 `;
 
 interface IProps {
-  handleChange: (
-    event: React.MouseEvent<HTMLButtonElement>,
-    id: number
-  ) => void;
+  handleChange: () => void;
   expanded: boolean;
 }
 
