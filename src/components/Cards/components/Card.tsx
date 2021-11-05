@@ -36,19 +36,14 @@ const Card: React.FC<IProps> = ({ post }) => {
     setComments(comments);
   };
 
-  const handleChangeCollapse = (id: number) => {
-    setChecked((prev) => !prev);
-  };
+  const handleChangeCollapse = () => setChecked((prev) => !prev);
 
   return (
     <>
       <Content>
         <Header>{post.title}</Header> <p>{post.body}</p>
         <div>
-          <ExpandMore
-            handleChange={() => handleChangeCollapse(post.id)}
-            expanded={checked}
-          />
+          <ExpandMore handleChange={handleChangeCollapse} expanded={checked} />
           {checked ? <Comments comments={comments} checked={checked} /> : null}
         </div>
       </Content>
